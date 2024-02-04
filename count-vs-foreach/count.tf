@@ -1,11 +1,11 @@
 locals {
-    count = {
-        rules = [
-          "allow-#1",
-          "allow-#2",
-          "allow-#3",
-        ]
-    }
+  count = {
+    rules = [
+      "allow-#1",
+      "allow-#2",
+      "allow-#3",
+    ]
+  }
 }
 
 resource "null_resource" "security_group_rules_count" {

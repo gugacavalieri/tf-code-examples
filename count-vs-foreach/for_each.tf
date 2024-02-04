@@ -1,11 +1,11 @@
 locals {
-    for_each = {
-        rules = [
-          "allow-#1",
-          "allow-#2",
-          "allow-#3",
-        ]
-    }
+  for_each = {
+    rules = [
+      "allow-#1",
+      "allow-#2",
+      "allow-#3",
+    ]
+  }
 }
 
 resource "null_resource" "security_group_rules_for_each" {
