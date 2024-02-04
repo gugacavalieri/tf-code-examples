@@ -1,0 +1,50 @@
+name: Terraform/Lint/Check
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+
+jobs:
+  tflint:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: ["ubuntu-latest"]
+
+    steps:
+    - uses: actions/checkout@v4
+      name: Checkout source code
+
+    - uses: actions/cache@v3
+      name: Cache plugin dir
+      with:
+        path: ~/.tflint.d/plugins
+        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+    - uses: terraform-linters/setup-tflint@v3
+      name: Setup TFLint
+      with:
+        tflint_version: v0.50.2
+
+    - uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.6.6"
+
+    - name: Show version
+      run: |
+        tflint --version
+        terraform version
+
+    - name: Init TFLint
+      run: tflint --init
+      env:
+        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Run TFLint
+      run: tflint -f compact --recursive
+
+    - name: Run TF fmt
+      run: terraform fmt -recursive -check
+
