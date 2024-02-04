@@ -1,2 +1,5 @@
 # tf-code-examples
-Some simple code examples using Terraform
+
+[![Terraform/Lint/Check](https://github.com/gugacavalieri/tf-code-examples/actions/workflows/tflint.yaml/badge.svg)](https://github.com/gugacavalieri/tf-code-examples/actions/workflows/tflint.yaml)
+
+> Some simple code examples using Terraform
